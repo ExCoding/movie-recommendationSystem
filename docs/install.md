@@ -353,7 +353,7 @@ Tag
 4. 返回分值最大的 K 个电影，作为当前用户的推荐。
 ```
 
-## 电影相似度矩阵
+## 电影相似度矩阵 (Item-Item)
 
 通过 ALS 计算电影间相似度矩阵，该矩阵用于查询当前电影的相似电影并为实时推荐系统提供基础服务。
 
@@ -377,3 +377,27 @@ Tag
 1. Tanimoto系数<广义Jaccard相似系数>
 1. 信息检索 - 词频-逆文档频率<TF-IDF>
 1. 词对相似度 - 点间相似度
+
+使用 OfflineRecommender 模块 ALSTrainer 计算最佳 ALS 的超参数
+
+```
+def adjustALSParam(trainData: RDD[Rating], testData: RDD[Rating]): Unit = {
+    // 这里指定迭代次数为 20，rank 和 lambda 在几个值中选取调整
+    val result = for (rank <- Array(100, 200, 250); lambda <- Array(1, 0.1, 0.01, 0.001))
+      yield {
+        // 计算当前参数对应模型的 rmse，返回 Double
+        val model = ALS.train(trainData, rank, 20, lambda)
+        val rmse = getRMSE(model, testData)
+        (rank, lambda, rmse)
+      }
+    // 按照 rmse 排序
+    // 控制台打印输出最优参数
+    println("===>", result.sortBy(_._3).head)
+    // println(result.minBy(_._3))
+    // (===>,(100,0.1,0.9267907826304898))
+  }
+```
+
+如果迭代次数过大，本地机器配置不高，设置的迭代次数不宜过大。
+
+OfflineRecommender 离线模块，保存用户电影推荐信息、电影相似度信息到 MongoDB。
