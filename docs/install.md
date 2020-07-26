@@ -1,5 +1,12 @@
 # 数据加载模块
 
+```
+2020-07-26 15:17:20,044   INFO --- [                                              main]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+ERROR StatusLogger Log4j2 could not find a logging implementation. Please add log4j-core to the classpath. Using SimpleLogger to log to the console...
+(使用的 es 地址是：,192.168.17.140,9300)
+[Stage 5:>                                                       (2 + 12) / 200]2020-07-26 15:17:26,720   INFO --- [                                  pool-17-thread-1]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+```
+
 ## ES
 
 ```
@@ -262,7 +269,73 @@ CONTAINER ID        IMAGE                 COMMAND                  CREATED      
 f2e35a3bcd8d        mongo                 "docker-entrypoint.s…"   19 minutes ago      Up 19 minutes       0.0.0.0:27017->27017/tcp                         mongo
 ```
 
+## Redis
+
+```
+docker run  -d --name redis -p 6379:6379 redis:4.0.2
+
+docker ps -a
+
+docker exec -it redis  bash
+
+root@efc549d33e89:/data# redis-
+redis-benchmark  redis-check-aof  redis-check-rdb  redis-cli        redis-sentinel   redis-server     
+
+redis-cli
+
+lpush uid:2 261:4.0 265:5.0 266:5.0 272:3.0 273:4.0 292:3.0 296:4.0 300:3.0
+
+127.0.0.1:6379> keys *
+(empty list or set)
+127.0.0.1:6379> lpush uid:2 261:4.0 265:5.0 266:5.0 272:3.0 273:4.0 292:3.0 296:4.0 300:3.0
+(integer) 8
+127.0.0.1:6379> keys *
+1) "uid:2"
+127.0.0.1:6379> lrange uid:2 0 -1
+1) "300:3.0"
+2) "296:4.0"
+3) "292:3.0"
+4) "273:4.0"
+5) "272:3.0"
+6) "266:5.0"
+7) "265:5.0"
+8) "261:4.0"
+127.0.0.1:6379>
+```
+
+## zookeeper
+
+```
+
+```
+
+## kafka
+
+```
+192.168.17.240 192.168.17.240 192.168.17.240 
+
+./bin/kafka-server-start.sh -daemon ./config/server.properties
+```
+
 # 数据离线模块
+
+```
+2020-07-26 15:24:41,346   INFO --- [                                              main]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:24:45,337   INFO --- [                                              main]  com.mongodb.spark.sql.MongoRelation                                             (line:   48)  :  requiredColumns: mid, filters: 
+                                                                                2020-07-26 15:24:47,761   INFO --- [                                              main]  com.mongodb.spark.sql.MongoRelation                                             (line:   48)  :  requiredColumns: mid, timestamp, filters: 
+[Stage 7:======================>                                (81 + 12) / 200]2020-07-26 15:24:54,203   INFO --- [                                  pool-17-thread-1]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+[Stage 7:======================================================>(197 + 3) / 200]2020-07-26 15:24:58,195   INFO --- [          Executor task launch worker for task 610]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:24:58,208   INFO --- [          Executor task launch worker for task 608]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:24:58,209   INFO --- [          Executor task launch worker for task 608]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+                                                                                2020-07-26 15:25:00,046   INFO --- [                                              main]  com.mongodb.spark.sql.MongoRelation                                             (line:   48)  :  requiredColumns: mid, score, filters: 
+2020-07-26 15:25:01,093   INFO --- [                                              main]  com.mongodb.spark.sql.MongoRelation                                             (line:   48)  :  requiredColumns: _id, actors, describe, directors, genres, issue, language, mid, name, shoot, timeLong, filters: IsNotNull(mid)
+2020-07-26 15:25:01,117   INFO --- [                                              main]  com.mongodb.spark.sql.MongoRelation                                             (line:   48)  :  requiredColumns: mid, score, filters: IsNotNull(mid)
+[Stage 13:==========>                                         (464 + 12) / 2400]2020-07-26 15:25:07,575   INFO --- [                                  pool-17-thread-1]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+[Stage 13:=================================================> (2343 + 12) / 2400]2020-07-26 15:25:16,129   INFO --- [         Executor task launch worker for task 3457]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+                                                                                2020-07-26 15:25:22,599   INFO --- [                                         Thread-14]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+
+Process finished with exit code 0
+```
 
 运行数据离线模块服务后，查看结果
 
@@ -342,6 +415,64 @@ Tag
 
 # 离线推荐模块
 
+```
+2020-07-26 15:27:07,917   INFO --- [                                              main]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:10,182   INFO --- [                                              main]  com.mongodb.spark.sql.MongoRelation                                             (line:   48)  :  requiredColumns: mid, score, timestamp, uid, filters: 
+2020-07-26 15:27:12,296   WARN --- [           Executor task launch worker for task 31]  com.github.fommil.netlib.BLAS                                                   (line:   61)  :  Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
+2020-07-26 15:27:12,297   WARN --- [           Executor task launch worker for task 31]  com.github.fommil.netlib.BLAS                                                   (line:   61)  :  Failed to load implementation from: com.github.fommil.netlib.NativeRefBLAS
+2020-07-26 15:27:12,659   WARN --- [           Executor task launch worker for task 52]  com.github.fommil.netlib.LAPACK                                                 (line:   61)  :  Failed to load implementation from: com.github.fommil.netlib.NativeSystemLAPACK
+2020-07-26 15:27:12,660   WARN --- [           Executor task launch worker for task 52]  com.github.fommil.netlib.LAPACK                                                 (line:   61)  :  Failed to load implementation from: com.github.fommil.netlib.NativeRefLAPACK
+2020-07-26 15:27:16,343   INFO --- [                                  pool-17-thread-1]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:23,334   INFO --- [                                              main]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:28,345   INFO --- [                                  pool-17-thread-1]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+[Stage 137:>                                                      (0 + 12) / 12]2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 335]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 338]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 337]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 343]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 336]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 345]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,304   INFO --- [          Executor task launch worker for task 339]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,310   INFO --- [          Executor task launch worker for task 345]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,310   INFO --- [          Executor task launch worker for task 341]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,312   INFO --- [          Executor task launch worker for task 341]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,309   INFO --- [          Executor task launch worker for task 336]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,309   INFO --- [          Executor task launch worker for task 343]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,309   INFO --- [          Executor task launch worker for task 337]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,309   INFO --- [          Executor task launch worker for task 338]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,309   INFO --- [          Executor task launch worker for task 334]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,308   INFO --- [          Executor task launch worker for task 344]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,308   INFO --- [          Executor task launch worker for task 340]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,314   INFO --- [          Executor task launch worker for task 340]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,307   INFO --- [          Executor task launch worker for task 342]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,314   INFO --- [          Executor task launch worker for task 344]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,314   INFO --- [          Executor task launch worker for task 334]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,311   INFO --- [          Executor task launch worker for task 339]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:33,317   INFO --- [          Executor task launch worker for task 342]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+[Stage 161:=========================================>          (115 + 12) / 144]2020-07-26 15:27:38,956   INFO --- [                                  pool-17-thread-1]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+[Stage 161:===================================================> (140 + 4) / 144]2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 491]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 501]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 490]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 493]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 497]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 495]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 496]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 494]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 500]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 498]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,813   INFO --- [          Executor task launch worker for task 492]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Creating MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,815   INFO --- [          Executor task launch worker for task 498]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,815   INFO --- [          Executor task launch worker for task 500]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,816   INFO --- [          Executor task launch worker for task 492]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,814   INFO --- [          Executor task launch worker for task 494]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,814   INFO --- [          Executor task launch worker for task 496]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,814   INFO --- [          Executor task launch worker for task 497]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,814   INFO --- [          Executor task launch worker for task 493]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,814   INFO --- [          Executor task launch worker for task 490]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,814   INFO --- [          Executor task launch worker for task 501]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+2020-07-26 15:27:39,818   INFO --- [          Executor task launch worker for task 495]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+                                                                                2020-07-26 15:27:49,490   INFO --- [                                         Thread-14]  com.mongodb.spark.connection.MongoClientCache                                   (line:   48)  :  Closing MongoClient: [192.168.17.140:27017]
+```
+
 ## 用户电影推荐矩阵 (User-Item)
 
 通过 ALS 训练出来的 Model 来计算所有当前用户电影的推荐矩阵
@@ -401,3 +532,99 @@ def adjustALSParam(trainData: RDD[Rating], testData: RDD[Rating]): Unit = {
 如果迭代次数过大，本地机器配置不高，设置的迭代次数不宜过大。
 
 OfflineRecommender 离线模块，保存用户电影推荐信息、电影相似度信息到 MongoDB。
+
+# 实时推荐模块
+
+## 运行 DataLoader 模块
+## 运行 StatisticsRecommender 模块
+## 运行 OfflineRecommender 模块
+## 运行 StreamingRecommender 模块
+
+kafka 生产者, uid = 2 对某部电影进行模拟评价
+
+```
+[root@master kafka_2.11-0.10.2.1]# ./bin/kafka-console-producer.sh  --broker-list localhost:9092 --topic recommender
+2|161|3.0|835355493
+```
+
+redis
+```
+127.0.0.1:6379> lrange uid:2 0 -1
+1) "300:3.0"
+2) "296:4.0"
+3) "292:3.0"
+4) "273:4.0"
+5) "272:3.0"
+6) "266:5.0"
+7) "265:5.0"
+8) "261:4.0"
+127.0.0.1:6379> 
+```
+
+mongo
+```
+{ "_id" : ObjectId("5f1d34487f2f927018417f0b"), "uid" : 2, "recs" : [ { "mid" : 100553, "score" : 3.372539756021398 }, { "mid" : 1277, "score" : 3.358318909483622 }, { "mid" : 1880, "score" : 3.3360708872282214 }, { "mid" : 112175, "score" : 3.3214684311068963 }, { "mid" : 1440, "score" : 3.3143326283220538 }, { "mid" : 27808, "score" : 3.295601747795067 }, { "mid" : 26819, "score" : 3.2754158085818217 }, { "mid" : 1672, "score" : 3.2519903807386084 }, { "mid" : 2045, "score" : 3.241762257171785 }, { "mid" : 107081, "score" : 3.2185618305292394 }, { "mid" : 106471, "score" : 3.2185618274095393 }, { "mid" : 106762, "score" : 3.218561825720072 }, { "mid" : 106473, "score" : 3.218561822106436 }, { "mid" : 1427, "score" : 3.217805603507783 }, { "mid" : 2561, "score" : 3.2075089914593997 }, { "mid" : 104913, "score" : 3.1991672476124497 }, { "mid" : 1631, "score" : 3.1842857773078825 }, { "mid" : 1881, "score" : 3.0985064818083012 }, { "mid" : 127124, "score" : 3.076520040478509 }, { "mid" : 2852, "score" : 3.057268591688964 } ] }
+``` 
+
+项目日志
+```
+                                                                                2020-07-26 15:43:40,041   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding enable.auto.commit to false for executor
+2020-07-26 15:43:40,047   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding auto.offset.reset to none for executor
+2020-07-26 15:43:40,049   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding executor group.id to spark-executor-recommender
+2020-07-26 15:43:40,050   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding receive.buffer.bytes to 65536 see KAFKA-3135
+*************** streaming started! ***************
+*************** rating data coming! ***************
+```
+
+kafka 生产者, uid = 2 对某部电影进行模拟评价
+
+打分数据
+
+```
+[root@master kafka_2.11-0.10.2.1]# ./bin/kafka-console-producer.sh  --broker-list localhost:9092 --topic recommender
+2|161|3.0|835355493
+2|165|5.0|835355441
+```
+
+redis
+
+```
+127.0.0.1:6379> lrange uid:2 0 -1
+1) "165:5.0"
+2) "300:3.0"
+3) "296:4.0"
+4) "292:3.0"
+5) "273:4.0"
+6) "272:3.0"
+7) "266:5.0"
+8) "265:5.0"
+9) "261:4.0"
+127.0.0.1:6379>
+```
+
+mongo
+
+```
+> db.StreamRecs.find()
+{ "_id" : ObjectId("5f1d35467f2f927018417f0c"), "uid" : 2, "recs" : [ { "mid" : 100553, "score" : 3.372539756021398 }, { "mid" : 1665, "score" : 3.3539450757188805 }, { "mid" : 112175, "score" : 3.3214684311068963 }, { "mid" : 27808, "score" : 3.295601747795067 }, { "mid" : 26819, "score" : 3.2754158085818217 }, { "mid" : 2788, "score" : 3.2678983268260158 }, { "mid" : 1324, "score" : 3.160093371467256 }, { "mid" : 27728, "score" : 3.0327338020264243 }, { "mid" : 127052, "score" : 2.943341024508923 }, { "mid" : 121126, "score" : 2.943341024508923 }, { "mid" : 102666, "score" : 2.943341024508923 }, { "mid" : 107412, "score" : 2.943341024508923 }, { "mid" : 118468, "score" : 2.943341024508923 }, { "mid" : 1036, "score" : 2.894235855218782 }, { "mid" : 2423, "score" : 2.8433388274896942 }, { "mid" : 285, "score" : 2.7977429468827886 }, { "mid" : 1270, "score" : 2.706466611161512 }, { "mid" : 30848, "score" : 2.66842812959567 }, { "mid" : 27851, "score" : 2.6684281283547637 }, { "mid" : 1370, "score" : 2.3326278647529515 } ] }
+```
+
+项目日志
+
+```
+                                                                              2020-07-26 15:43:40,041   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding enable.auto.commit to false for executor
+2020-07-26 15:43:40,047   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding auto.offset.reset to none for executor
+2020-07-26 15:43:40,049   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding executor group.id to spark-executor-recommender
+2020-07-26 15:43:40,050   WARN --- [                                              main]  org.apache.spark.streaming.kafka010.KafkaUtils                                  (line:   66)  :  overriding receive.buffer.bytes to 65536 see KAFKA-3135
+*************** streaming started! ***************
+*************** rating data coming! ***************
+*************** rating data coming! ***************
+```
+
+可以明显地看到推荐数据发生明显的变化：
+
+    { "_id" : ObjectId("5f1d35467f2f927018417f0c"), "uid" : 2, "recs" : [ { "mid" : 100553, "score" : 3.372539756021398 }, { "mid" : 1665, "score" : 3.3539450757188805 }, { "mid" : 112175, "score" : 3.3214684311068963 }, { "mid" : 27808, "score" : 3.295601747795067 }, { "mid" : 26819, "score" : 3.2754158085818217 }, { "mid" : 2788, "score" : 3.2678983268260158 }, { "mid" : 1324, "score" : 3.160093371467256 }, { "mid" : 27728, "score" : 3.0327338020264243 }, { "mid" : 127052, "score" : 2.943341024508923 }, { "mid" : 121126, "score" : 2.943341024508923 }, { "mid" : 102666, "score" : 2.943341024508923 }, { "mid" : 107412, "score" : 2.943341024508923 }, { "mid" : 118468, "score" : 2.943341024508923 }, { "mid" : 1036, "score" : 2.894235855218782 }, { "mid" : 2423, "score" : 2.8433388274896942 }, { "mid" : 285, "score" : 2.7977429468827886 }, { "mid" : 1270, "score" : 2.706466611161512 }, { "mid" : 30848, "score" : 2.66842812959567 }, { "mid" : 27851, "score" : 2.6684281283547637 }, { "mid" : 1370, "score" : 2.3326278647529515 } ] }
+    { "_id" : ObjectId("5f1d34487f2f927018417f0b"), "uid" : 2, "recs" : [ { "mid" : 100553, "score" : 3.372539756021398 }, { "mid" : 1277, "score" : 3.358318909483622 }, { "mid" : 1880, "score" : 3.3360708872282214 }, { "mid" : 112175, "score" : 3.3214684311068963 }, { "mid" : 1440, "score" : 3.3143326283220538 }, { "mid" : 27808, "score" : 3.295601747795067 }, { "mid" : 26819, "score" : 3.2754158085818217 }, { "mid" : 1672, "score" : 3.2519903807386084 }, { "mid" : 2045, "score" : 3.241762257171785 }, { "mid" : 107081, "score" : 3.2185618305292394 }, { "mid" : 106471, "score" : 3.2185618274095393 }, { "mid" : 106762, "score" : 3.218561825720072 }, { "mid" : 106473, "score" : 3.218561822106436 }, { "mid" : 1427, "score" : 3.217805603507783 }, { "mid" : 2561, "score" : 3.2075089914593997 }, { "mid" : 104913, "score" : 3.1991672476124497 }, { "mid" : 1631, "score" : 3.1842857773078825 }, { "mid" : 1881, "score" : 3.0985064818083012 }, { "mid" : 127124, "score" : 3.076520040478509 }, { "mid" : 2852, "score" : 3.057268591688964 } ] }
+
+# 基于内容的推荐模块
+

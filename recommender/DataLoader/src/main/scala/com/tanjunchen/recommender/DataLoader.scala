@@ -84,9 +84,9 @@ object DataLoader {
 
   // 定义常量
 
-  val MOVIE_DATA_PATH = "D:\\ScalaProject\\MovieRecommendSystem\\recommender\\DataLoader\\src\\main\\resources\\movies.csv"
-  val RATING_DATA_PATH = "D:\\ScalaProject\\MovieRecommendSystem\\recommender\\DataLoader\\src\\main\\resources\\ratings.csv"
-  val TAG_DATA_PATH = "D:\\ScalaProject\\MovieRecommendSystem\\recommender\\DataLoader\\src\\main\\resources\\tags.csv"
+  val MOVIE_DATA_PATH = "docs/data/movies.csv"
+  val RATING_DATA_PATH = "docs/data/ratings.csv"
+  val TAG_DATA_PATH = "docs/data/tags.csv"
 
   val ES_INDEX = "recommender"
   val ES_CLUSTER_NAME = "elasticsearch"
