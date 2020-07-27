@@ -23,12 +23,14 @@ case class MovieRecs(mid: Int, recs: Seq[Recommendation])
 
 object OfflineRecommender {
 
+  val TEST_URL = "192.168.17.140"
+
   // 定义表名和常量
   val MONGODB_RATING_COLLECTION = "Rating"
   val USER_RECS = "UserRecs"
   val MOVIE_RECS = "MovieRecs"
   val USER_MAX_RECOMMENDATION = 20
-  val MONGODB_URL = "mongodb://192.168.17.140:27017/recommender"
+  val MONGODB_URL = "mongodb://" + TEST_URL + ":27017/recommender"
   val MONGO_DB = "recommender"
 
   // ALS

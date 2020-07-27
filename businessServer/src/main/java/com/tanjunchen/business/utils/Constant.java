@@ -5,11 +5,13 @@ package com.tanjunchen.business.utils;
  */
 public class Constant {
 
+    public static String URL = "192.168.17.140";
+
     //************** FOR MONGODB ****************
 
     public static String MONGODB_DATABASE = "recommender";
 
-    public static String MONGODB_USER_COLLECTION= "User";
+    public static String MONGODB_USER_COLLECTION = "User";
 
     public static String MONGODB_MOVIE_COLLECTION = "Movie";
 

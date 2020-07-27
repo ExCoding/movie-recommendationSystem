@@ -25,12 +25,14 @@ case class Recommendation(mid: Int, score: Double)
 case class MovieRecs(mid: Int, recs: Seq[Recommendation])
 
 object ContentRecommender {
+  val TEST_URL = "192.168.17.140"
+
   // 定义表名和常量
   val MONGODB_MOVIE_COLLECTION = "Movie"
   val CONTENT_MOVIE_RECS = "ContentMovieRecs"
   val SCORE_FILTER = 0.6
 
-  val MONGO_URL = "mongodb://192.168.17.140:27017/recommender"
+  val MONGO_URL = "mongodb://" + TEST_URL + ":27017/recommender"
   val MONGO_DB = "recommender"
 
   // 设置日志级别

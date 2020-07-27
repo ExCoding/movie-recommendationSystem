@@ -33,8 +33,11 @@ case class UserRecs(uid: Int, recs: Seq[Recommendation])
 case class MovieRecs(mid: Int, recs: Seq[Recommendation])
 
 object StreamingRecommender {
-  val REDIS_URL = "192.168.17.140"
-  val MONGODB_URL = "mongodb://192.168.17.140:27017/recommender"
+
+  val TEST_URL = "192.168.17.140"
+
+  val REDIS_URL = TEST_URL
+  val MONGODB_URL = "mongodb://" + TEST_URL + ":27017/recommender"
   val MONGODB_DB = "recommender"
 
   val MAX_USER_RATINGS_NUM = 20
@@ -47,6 +50,7 @@ object StreamingRecommender {
   val SCORE_FACTOR = 3
 
   val KAFKA_BATCH_TIME = 2
+  // kafka 集群的配置信息
   val KAFKA_URL = "192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092"
   val KAFKA_TOPIC = "recommender"
   val KAFKA_GROUP_ID = "recommender"

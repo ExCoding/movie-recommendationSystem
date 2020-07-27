@@ -27,14 +27,13 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient
  * Action|Adventure|Sci-Fi                     类型，genres
  * Mark Hamill|Harrison Ford|Carrie Fisher     演员表，actors
  * George Lucas                                导演，directors
- *
  */
 /**
  *
  * @param mid       电影ID，mid
  * @param name      电影名称，name
- * @param describe  详情描述，descri
- * @param timeLong  时长，timelong
+ * @param describe  详情描述，describe
+ * @param timeLong  时长，timeLong
  * @param issue     发行时间，issue
  * @param shoot     拍摄时间，shoot
  * @param language  语言，language
@@ -80,6 +79,7 @@ case class ESConfig(httpHosts: String, transportHosts: String, index: String, cl
  * 数据加载模块
  * 加载 ratings movies tags
  */
+
 object DataLoader {
 
   // 定义常量
@@ -97,10 +97,12 @@ object DataLoader {
   val MONGODB_TAG_COLLECTION = "Tag"
   val ES_MOVIE_INDEX = "Movie"
 
-  val MONGO_URL = "mongodb://192.168.17.140:27017/recommender"
+  val TEST_URL = "192.168.17.140"
+
+  val MONGO_URL = "mongodb://" + TEST_URL + ":27017/recommender"
   val MONGO_DB = "recommender"
-  val ES_URL_HTTP = "192.168.17.140:9200"
-  val ES_URL_TRANS = "192.168.17.140:9300"
+  val ES_URL_HTTP = TEST_URL + ":9200"
+  val ES_URL_TRANS = TEST_URL + ":9300"
 
   def main(args: Array[String]): Unit = {
 

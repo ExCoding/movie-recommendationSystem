@@ -34,8 +34,9 @@ object StatisticsRecommender {
   val MONGO_DB = "recommender"
 
   val TOTAL_NUM = 10
+  val TEST_URL = "192.168.17.140"
 
-  val MONGO_URL = "mongodb://192.168.17.140:27017/recommender"
+  val MONGO_URL = "mongodb://" + TEST_URL + ":27017/recommender"
 
 
   def main(args: Array[String]): Unit = {
