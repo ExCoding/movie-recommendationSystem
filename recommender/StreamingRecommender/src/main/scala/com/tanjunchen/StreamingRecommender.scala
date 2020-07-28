@@ -51,7 +51,8 @@ object StreamingRecommender {
 
   val KAFKA_BATCH_TIME = 2
   // kafka 集群的配置信息
-  val KAFKA_URL = "192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092"
+  // 192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092
+  val KAFKA_URL = "192.168.17.240:9092"
   val KAFKA_TOPIC = "recommender"
   val KAFKA_GROUP_ID = "recommender"
 

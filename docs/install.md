@@ -1007,8 +1007,3 @@ db.ContentMovieRecs.findOne()
 	]
 }
 ```
-
-# 实时系统 + 业务系统
-
-启动 redis mongo es zk kafka flume
-

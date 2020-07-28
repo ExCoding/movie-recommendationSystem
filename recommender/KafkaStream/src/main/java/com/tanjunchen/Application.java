@@ -12,9 +12,9 @@ import java.util.Properties;
 public class Application {
 
     // 192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092 kafka 集群信息
-    private static final String BROKER_URL = "192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092";
+    private static final String BROKER_URL = "192.168.17.240:9092";
     // 192.168.17.240:2181,192.168.17.241:2181,192.168.17.242:2181 zookeeper 集群信息
-    private static final String ZOOKEEPER_URL = "192.168.17.240:2181,192.168.17.241:2181,192.168.17.242:2181";
+    private static final String ZOOKEEPER_URL = "192.168.17.240:2181";
     private static final String KAFKA_FROM = "log";
     private static final String KAFKA_TO = "recommender";
 
