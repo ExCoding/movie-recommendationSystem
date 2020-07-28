@@ -25,6 +25,7 @@ case class Recommendation(mid: Int, score: Double)
 case class MovieRecs(mid: Int, recs: Seq[Recommendation])
 
 object ContentRecommender {
+
   val TEST_URL = "192.168.17.140"
 
   // 定义表名和常量
@@ -178,7 +179,7 @@ object ContentRecommender {
           (a._1, (b._1, simScore))
         }
       }
-      .filter(_._2._2 > SCORE_FILTER) // 过滤出相似度大于0.6的
+      .filter(_._2._2 > SCORE_FILTER) // 过滤出相似度大于 0.6
       .groupByKey()
       .map {
         case (mid, items) => MovieRecs(mid, items.toList.sortWith(_._2 > _._2).map(x => Recommendation(x._1, x._2)))

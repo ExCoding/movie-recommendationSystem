@@ -12,7 +12,7 @@ ERROR StatusLogger Log4j2 could not find a logging implementation. Please add lo
 ```
 docker run  -p 9200:9200 -p 9300:9300 --name='es' -d  -v /home/k8s-develop/movie/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:5.6.8
 
-docker exec -it es /bin/bash    #进入交互模式，es必须先启动
+docker exec -it es /bin/bash    # 进入交互模式，es必须先启动
 
 sudo vim /etc/sysctl.conf
 

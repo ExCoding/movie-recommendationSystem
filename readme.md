@@ -2,14 +2,55 @@
 
 ## 环境搭建
 
+**待完善**
+
+docker rm $(docker ps -q -f status=exited)
+
 1. es
+
+docker run  -p 9200:9200 -p 9300:9300 --name='es' -d  -v /home/k8s-develop/movie/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:5.6.8
+
 1. mongo
+
+docker run --name mongo -p 27017:27017 -d mongo
+
 1. redis
+
+docker run  -d --name redis -p 6379:6379 redis:4.0.2
+
 1. kafka
+
+bin/kafka-server-start.sh -daemon ./config/server.properties
+
+查看 topic 
+
+./bin/kafka-topics.sh --list -zookeeper localhost:2181
+
+创建 topic
+
+./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic log
+
+./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic recommender
+
+查看 topic
+
+./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic recommender
+
 1. flume
+
 1. zookeeper
+
+bin/zkServer.sh start
+cp conf/zoo_sample.cfg  conf/zoo.cfg  
+root@ubuntu:/usr/local/src/zookeeper-3.4.5# bin/zkServer.sh status
+JMX enabled by default
+Using config: /usr/local/src/zookeeper-3.4.5/bin/../conf/zoo.cfg
+Mode: standalone
+
 1. tomcat
+
 1. vm
+
 1. docker
 
 ## 测试部署流程

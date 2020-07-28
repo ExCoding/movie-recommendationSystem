@@ -3,6 +3,7 @@ package com.tanjunchen;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.processor.TopologyBuilder;
+import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 
 import java.util.Properties;
 
@@ -11,10 +12,8 @@ import java.util.Properties;
  */
 public class Application {
 
-    // 192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092 kafka 集群信息
-    private static final String BROKER_URL = "192.168.17.240:9092";
-    // 192.168.17.240:2181,192.168.17.241:2181,192.168.17.242:2181 zookeeper 集群信息
-    private static final String ZOOKEEPER_URL = "192.168.17.240:2181";
+    private static final String BROKER_URL = "192.168.17.140:9092";
+    private static final String ZOOKEEPER_URL = "192.168.17.140:2181";
     private static final String KAFKA_FROM = "log";
     private static final String KAFKA_TO = "recommender";
 
@@ -27,13 +26,15 @@ public class Application {
         String to = KAFKA_TO;
 
         // 定义 kafka streaming 的配置
-        Properties settings = new Properties();
-        settings.put(StreamsConfig.APPLICATION_ID_CONFIG, "logFilter");
-        settings.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
-        settings.put(StreamsConfig.ZOOKEEPER_CONNECT_CONFIG, zookeepers);
+        Properties props = new Properties();
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "logFilter");
+        // 请设置此参数 由于 kafka 使用的版本较低, 没有设置时间戳
+        props.put(StreamsConfig.TIMESTAMP_EXTRACTOR_CLASS_CONFIG, WallclockTimestampExtractor.class);
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, brokers);
+        props.put(StreamsConfig.ZOOKEEPER_CONNECT_CONFIG, zookeepers);
 
         // 创建 kafka stream 配置对象
-        StreamsConfig config = new StreamsConfig(settings);
+        StreamsConfig config = new StreamsConfig(props);
 
         // 创建一个拓扑建构器
         TopologyBuilder builder = new TopologyBuilder();

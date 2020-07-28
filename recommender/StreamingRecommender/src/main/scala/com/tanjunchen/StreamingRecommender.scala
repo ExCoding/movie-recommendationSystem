@@ -51,8 +51,7 @@ object StreamingRecommender {
 
   val KAFKA_BATCH_TIME = 2
   // kafka 集群的配置信息
-  // 192.168.17.240:9092,192.168.17.241:9092,192.168.17.242:9092
-  val KAFKA_URL = "192.168.17.240:9092"
+  val KAFKA_URL = "192.168.17.140:9092"
   val KAFKA_TOPIC = "recommender"
   val KAFKA_GROUP_ID = "recommender"
 
@@ -131,8 +130,11 @@ object StreamingRecommender {
             // 3. 对每个备选电影，计算推荐优先级，得到当前用户的实时推荐列表，Array[(mid, score)]
             val streamRecs = computeMovieScores(candidateMovies, userRecentlyRatings, simMovieMatrixBroadCast.value)
 
+            streamRecs.foreach(println(_))
+
             // 4. 把推荐数据保存到 mongodb
             saveDataToMongoDB(uid, streamRecs)
+            println("*************** rating data ending! ***************")
           }
         }
     }

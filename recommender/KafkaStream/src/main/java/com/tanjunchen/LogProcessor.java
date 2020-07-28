@@ -21,7 +21,10 @@ public class LogProcessor implements Processor<byte[], byte[]> {
         String input = new String(line);
         // 根据前缀 MOVIE_RATING_PREFIX: 从日志信息中提取评分数据
         if (input.contains("MOVIE_RATING_PREFIX:")) {
-            System.out.println("movie rating data coming!>>>>>>>>>>>" + input);
+            System.out.println("movie rating data coming!>>>>>>>>>>>");
+            System.out.println("==========================================================================");
+            System.out.println(input);
+            System.out.println("==========================================================================");
             input = input.split("MOVIE_RATING_PREFIX:")[1].trim();
             context.forward("logProcessor".getBytes(), input.getBytes());
         }
