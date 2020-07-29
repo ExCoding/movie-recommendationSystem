@@ -2,6 +2,8 @@
 
 ## 环境搭建
 
+**[演示视频](https://www.bilibili.com/video/BV1Xi4y137BU)**
+
 **待完善**
 
 docker rm $(docker ps -q -f status=exited)
